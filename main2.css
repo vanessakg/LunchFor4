@@ -11,8 +11,8 @@ pre, form, fieldset, input, textarea, p, blockquote, th, td {
   margin:5;}
 
 body{
-    background-color: whitesmoke;
-}
+  background-image: linear-gradient(blue, white);
+  background-color: whitesmoke;}
 
 body,input{
   font-family:'Open sans',sans-serif;
