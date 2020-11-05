@@ -5,12 +5,11 @@ html
         link( rel='stylesheet', href='css/main2.css')
     body    
         include ./loginHeader.pug
-        img( src='images/lunch4four_logo.png' height='90px' width='600px')
+        img( src='imgs/lunch4four_logo.png' height='90px' width='600px')
         
         form(action='post-test', method='post')
-            h3 Please enter your Aurora ID number
-            div
-                label(for="AuID") AU Id Number: 
+            div 
+                h3 Please enter your Aurora ID number:
                 input(name='auID' value= ' ')
             br
             
