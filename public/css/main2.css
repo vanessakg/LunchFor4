@@ -9,6 +9,16 @@ h3{
   color: white;
   background-color: rgb(27, 3, 92);
 }
+#create{
+  color: white;
+  background-color: rgb(27, 3, 92);
+  text-align: center;
+}
+#join{
+  color: white;
+  background-color: rgb(27, 3, 92);
+  text-align: center;
+}
 
 body{
   background-image: linear-gradient(white, blue);
@@ -24,7 +34,24 @@ form{
     margin-right: auto;
     text-align: center;
   }
+#container1{
+  height: 250px;
+  border: 2px solid #0d023d;
+  float: left;
+  margin-top: 10%;
+  margin-left: 40px;
+  width: 40%;
+}
 
+#container2{
+  height: 250px;
+  border: 2px solid #0d023d;
+  float: right;
+  margin-top: 10%;
+  margin-right: 40px;
+  width: 40%;
+
+}
 img{
     display: block;
     margin-top: 40px;
@@ -49,6 +76,28 @@ button{
     border-radius:3px 3px 3px 3px;
     border: none;
   }
+button.create{
+  font-size: 13px;
+    width: 200px;
+    height: 40px;
+    background-color:rgb(27, 3, 92) ;
+    color:white;
+    border-radius:3px 3px 3px 3px;
+    border: none;
+    margin-top: 50px;
+    cursor: pointer;
+}
+button.join{
+  font-size: 13px;
+    width: 200px;
+    height: 40px;
+    background-color:rgb(27, 3, 92) ;
+    color:white;
+    border-radius:3px 3px 3px 3px;
+    border: none;
+    margin-top: 25px;
+    cursor: pointer;
+}
 
 .header{
   color: blue;
