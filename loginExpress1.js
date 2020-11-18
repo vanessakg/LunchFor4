@@ -13,4 +13,7 @@ app.get('/LFFcreate', function(req, res){
 app.get('/LFFjoin', function(req, res){
     res.render('joinGroup')
 });
+app.get('/LFFpostLogin', function(req, res){
+    res.render('postLogin')
+});
 app.listen(3333); 
