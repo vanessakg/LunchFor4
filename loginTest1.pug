@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        title LogIn Page
+        link( rel='stylesheet', href='css/main2.css')
+    body    
+        include ./loginHeader.pug
+        img( src='images/lunch4four_logo.png' height='90px' width='600px')
+        
+        form(action='post-test', method='post')
+            h3 <b>Please enter your Aurora ID number
+            div
+                label(for="AuID") AU Id Number: 
+                input(name='auID' value= ' ')
+            br
+            
+            
+            button( type="login") Authenticate</b>
+        include ./loginFooter.pug
