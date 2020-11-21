@@ -23,9 +23,8 @@ app.get('/LFFcreate', function(req, res){
 app.get('/LFFjoin', function(req, res){
     res.render('joinGroup')
 });
-<<<<<<< Updated upstream
 app.listen(3333);
-=======
+
 app.get('/LFFpostLogin', function(req, res){
     res.render('postLogin')
 });
@@ -51,4 +50,4 @@ app.post('/groupCreated', function(req, res){
 //});
 module.exports = con;
 app.listen(3333); 
->>>>>>> Stashed changes
+
