@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var mysql = require("mysql");
 var bodyParser = require('body-parser');
+var nodemailer = require('nodemailer');
+//For scheduling emails every 4th of the Month
+//var cron = require('node-cron');
 
 var con = mysql.createConnection({
    host: "45.55.136.114",
@@ -23,7 +26,6 @@ app.get('/LFFcreate', function(req, res){
 app.get('/LFFjoin', function(req, res){
     res.render('joinGroup')
 });
-app.listen(3333);
 
 app.get('/LFFpostLogin', function(req, res){
     res.render('postLogin')
@@ -42,12 +44,67 @@ app.post('/groupCreated', function(req, res){
         if(err) throw err;
         console.log("record inserted!");  
     });
-    res.send("Your information has been submitted.")
+    res.send("Your information has been submitted: " + "\nTIME: " + req.body.time + "GROUP CODE: " +
+    req.body.groupCode + "DATE: " + req.body.gDate); 
+
+    transporter.sendMail(message, function(err, info){
+        if(err){
+            console.log(err)
+        }else {
+            console.log(info)
+        }
+    });
     
 });
 
+// app.post('/loginLFF', function(req, res){
+//     console.log(body);
+//     var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id) VALUES ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', '"+req.body.au_id+"')";
+//     con.query(sql, function(err){
+//         if(err) throw err;
+//         console.log("Member updated");
+//     })
+// })
+
+//This is a query for randomly selecting members.. dont know where to put it yet but displays in console for now..
+con.query("SELECT * FROM Member order by rand() LIMIT 2",
+function(err, rows){
+    if(err){
+        console.log(err);
+        return;
+    }
+    rows.forEach(function(result){
+        console.log(result.fName, result.lName, result.email, result.au_id);
+    });
+});
+
+let transporter = nodemailer.createTransport({
+    host: 'smtp.mailtrap.io',
+    port: 2525,
+    auth: {
+        user: '4ec3e368bdf5e0',
+        pass: 'ca40c475b2f8b0'
+    }
+});
+
+//login to mailtrap.io
+// email: vanessagill94@hotmail.com
+// pw: lunch4four!
+const message = {
+    from: 'lunch4four@aurora.edu', 
+    to: '0772a8d93c-c06d1a@inbox.mailtrap.io',
+    subject: 'Information about your Lunch4Four Monthly Meeting',
+    text: 'Thanks for signing up for Lunch4Four!' // Send out groupInfo
+};
+//This syntax sends out email every 4th of month
+// cron.schedule('0 0 4 * *', () => {
+//     if(error){
+//         console.log(error);
+//     } else{
+//         console.log('Email sent: ' + info.response);
+//     }
+// });
 //app.post('/joinGroup', function(req, res){    
 //});
 module.exports = con;
 app.listen(3333); 
-
