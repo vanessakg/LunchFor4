@@ -52,9 +52,18 @@ app.post('/groupCreated', function(req, res){
             console.log(err)
         }else {
             console.log(info)
+            var sql2 = "SELECT * FROM Member order by rand() LIMIT 2";
+            con.query(sql2, function(err, rows){
+                if(err){
+                    console.log(err)
+                    return;
+                }
+                rows.forEach(function(result){
+                    console.log(result.fName, result.lName, result.email, result.au_id);
+                });
+            });
         }
     });
-    
 });
 
 // app.post('/loginLFF', function(req, res){
@@ -65,18 +74,6 @@ app.post('/groupCreated', function(req, res){
 //         console.log("Member updated");
 //     })
 // })
-
-//This is a query for randomly selecting members.. dont know where to put it yet but displays in console for now..
-con.query("SELECT * FROM Member order by rand() LIMIT 2",
-function(err, rows){
-    if(err){
-        console.log(err);
-        return;
-    }
-    rows.forEach(function(result){
-        console.log(result.fName, result.lName, result.email, result.au_id);
-    });
-});
 
 let transporter = nodemailer.createTransport({
     host: 'smtp.mailtrap.io',
