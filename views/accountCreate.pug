@@ -1,0 +1,40 @@
+doctype html
+html
+    head
+        title Account Create Page
+        link( rel='stylesheet', href='css/main2.css')
+    body    
+        include ./loginHeader.pug
+        img( src='images/lunch4four_logo.png' height='45px' width='350px')
+        #container3
+            form(action='memberCreated', method='post')
+                h3 <b>Create Account Page
+                div
+                    label(for="fName") First Name:  
+                    input(name='fName' value= ' ')
+                    br
+                    br
+                    label(for="lName") Last Name: 
+                    input(name='lName' value= ' ')
+                    br
+                    br
+                    label(for="email") AU Email:  
+                    input(name='email' value= ' ')
+                    br
+                    br
+                    label(for="au_id") AU ID Number:  
+                    input(name='au_id' value= ' ')
+                    br
+                    br
+                    label(for="phoneNum") Phone Number:  
+                    input(name='phoneNum' value= ' ')
+                    br
+                    br
+                    label(for="Affiliation") Affiliation:  
+                    input(name='Affiliation' value= ' ')
+                    br
+                    br
+                a(href="memberCreated")
+                    button( type="login") Submit</b>
+            include ./loginFooter.pug 
+                    
