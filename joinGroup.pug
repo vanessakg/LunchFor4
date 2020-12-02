@@ -7,7 +7,7 @@ html
         include ./loginHeader.pug
         img( src='images/lunch4four_logo.png' height='45px' width='350px')
         #container3
-            form(action='post-test', method='post')
+            form(action='LFFpostLogin', method='get')
                 h3 <b>Join Group Page
                 div
                     label(for="AuID") Group Date: 
@@ -28,6 +28,6 @@ html
 
 
             
-            
-                button( type="login") Ok</b>
+                a(href="LFFpostLogin")
+                    button( type="login") Ok</b>
             include ./loginFooter.pug

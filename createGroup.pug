@@ -1,28 +1,28 @@
 doctype html
 html
     head
-        title Join Group Webpage
+        title Create Group Webpage
         link( rel='stylesheet', href='css/main2.css')
     body
         include ./loginHeader.pug
         img( src='images/lunch4four_logo.png' height='45px' width='350px')
         #container3
 
-            form(action='post-test', method='post')
+            form(action='LFFpostLogin', method='get')
                 h3 <b>Create Group Page
                 div
-                    label(for="AuID") Group Code: 
-                    input(name='auID' value= ' ')
+                    label(for="groupCode") Group Code: 
+                    input(name='groupCode' value= ' ')
                     br
-                    label(for="AuID") Group Date:
+                    label(for="gDate") Group Date:
                     input(type="date", name="") 
                     //-input(name='auID' value= ' ')
                     br
-                    label(for="AuID") Group Time: 
-                    input(name='auID' value= ' ')
+                    label(for="time") Group Time: 
+                    input(name='time' value= ' ')
                     br
-                    label(for="AuID") Group Location: 
-                    input(name='auID' value= ' ')
+                    label(for="location") Group Location: 
+                    input(name='location' value= ' ')
                     br
                     label(for="AuID") Group Members Invited: 
                     input(name='auID' value= ' ')
@@ -30,13 +30,14 @@ html
                     label(for="AuID") Group Members: 
                     input(name='auID' value= ' ')
                     br
-                    label(for="CheckBox") Email Confirmation:</b>
+                    label(for="CheckBox") Email Confirmation:
                     input(type='checkbox', name="CheckBox")
                     br
 
 
             
-            
-                button( type="login") <b>Cancel</b>
-                button( type="login") <b>Submit</b>
+                a(href="LFFpostLogin")
+                    button( type="login") <b>Cancel</b>
+                a(href="LFFpostLogin")
+                    button( type="submit") <b>Submit</b>
             include ./loginFooter.pug
