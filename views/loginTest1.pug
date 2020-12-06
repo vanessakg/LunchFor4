@@ -3,27 +3,26 @@ html
     head
         title LogIn Page
         link( rel='stylesheet', href='css/main2.css')
-    body    
+    body
         include ./loginHeader.pug
         img( src='images/lunch4four_logo.png' height='90px' width='600px')
         #container3
-            form(action='LFFaccount', method='get')
-                h3 <b>Please enter your Aurora ID number</b>
+            form(action='LFFcreateMember', method='get')
+                h3 <b>Please enter your Aurora ID number
                 div
                     label(for="AuID") Create an Account: 
-                    a(href="LFFaccount") 
-                        button( type="login") <b>Create</b>
+                    a(href="LFFcreateMember") 
+                        button( type="login") Create
                     br
-                    br
-        
+
             form(action='LFFpostLogin', method="get")
                 div
                     label(for="AuID") AU Id Number: 
                     input(name='auID' value= ' ')
                     br
-            
+
                 a(href="LFFpostLogin")
-                    button( type="login") <b>Authenticate</b>
+                    button( type="login") Authenticate</b>
             form(action='adminLogin', method="get")
                 a(href="adminLogin")
                     button( type="adLogin") <b>Admin User</b>
