@@ -1,8 +1,10 @@
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var mysql = require("mysql");
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
+var path = require('path');
 //For scheduling emails every 4th of the Month
 //var cron = require('node-cron');
 
@@ -20,6 +22,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.get('/LFFstart', function(req, res){
     res.render('loginTest1')
 });
+app.get('/adminLogin', function(req, res){
+    res.render('adminLogin')
+});
+app.get('/admin', function(req, res){
+    res.render('admin')
+});
 app.get('/LFFcreate', function(req, res){
     res.render('createGroup')
 });
@@ -35,7 +43,36 @@ con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 });
-
+app.get('/', function(request, response) {
+	response.sendFile(path.join(__dirname + '/adminLogin'));
+});
+app.post('/auth', function(request, response) {
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) {
+		connection.query('SELECT * FROM Admin WHERE username = "admin" AND password = "root"', [username, password], function(error, results, fields) {
+			if (results.length > 0) {
+				request.session.loggedin = true;
+				request.session.username = username;
+				response.redirect('/admin');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+        response.end();
+    }
+});
+app.get('/admin', function(request, response) {
+    if (request.session.loggedin) {
+        response.send('Welcome Admin user!');
+    } else {
+        response.send('Please login to view this page!');
+    }
+    response.end();
+});
 app.post('/groupCreated', function(req, res){
     console.log(req.body);
 
@@ -65,6 +102,11 @@ app.post('/groupCreated', function(req, res){
         }
     });
 });
+// app.use(session({
+//     secret: 'secret',
+//     resave: true,
+//     saveUninitialized: true
+// }));
 
 // app.post('/loginLFF', function(req, res){
 //     console.log(body);
