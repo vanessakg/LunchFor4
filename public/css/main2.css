@@ -8,6 +8,7 @@ div{
 h3{
   color: white;
   background-color: rgb(27, 3, 92);
+  text-align: center;
 }
 #create{
   color: white;
@@ -42,7 +43,6 @@ form{
   margin-left: 40px;
   width: 40%;
 }
-
 #container2{
   height: 250px;
   border: 2px solid #0d023d;
@@ -50,12 +50,10 @@ form{
   margin-top: 10%;
   margin-right: 40px;
   width: 40%;
-
 }
 #container3{
   height: 2000;
   border: 2px solid #0d023d;
-  
   width: 80%;
   margin: 0 auto;
 }

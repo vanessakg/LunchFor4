@@ -23,6 +23,11 @@ con.connect(function(err) {
 app.set('view engine', 'pug' );
 app.use( express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.get('/LFFstart', function(req, res){
     res.render('loginTest1')
@@ -45,11 +50,7 @@ app.get('/adminLogin', function(req, res){
 app.get('/admin', function(req, res){
     res.render('admin')
 });
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
+
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/adminLogin'));
 });
