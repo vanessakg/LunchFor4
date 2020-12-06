@@ -15,7 +15,7 @@ html
                     input(name='groupCode' value= ' ')
                     br
                     label(for="gDate") Group Date:
-                    input(type="date", name="") 
+                    input(type="date", value="2020-12-01", name="") 
                     //-input(name='auID' value= ' ')
                     br
                     label(for="time") Group Time: 
@@ -34,8 +34,11 @@ html
                     input(type='checkbox', name="CheckBox")
                     br
 
+                    a(href="/groupCreated")
+                        button( type="submit") <b>Submit</b>
+
+            form(action='LFFpostLogin', method='get')
                 a(href="LFFpostLogin")
                     button( type="login") <b>Cancel</b>
-                a(href="/groupCreated")
-                    button( type="submit") <b>Submit</b>
+                
             include ./loginFooter.pug

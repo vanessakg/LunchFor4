@@ -13,6 +13,11 @@ var con = mysql.createConnection({
    database: "lunch44g4"
 });
 
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
+
 app.set('view engine', 'pug' );
 app.use( express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,16 +37,11 @@ app.get('/LFFpostLogin', function(req, res){
 app.get('/LFFcreateMember', function(req, res){
     res.render('accountCreate')
 });
-
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
-
 app.post('/groupCreated', function(req, res){
     console.log(req.body);
 
-    var sql = "INSERT INTO GroupInfo(time, location, groupCode, date) VALUES ('"+req.body.time+"','"+req.body.location+"','"+req.body.groupCode+"','"+req.body.gDate+"')";
+    var sql = "INSERT INTO GroupInfo(time, location, groupCode, date)  \
+               VALUES ('"+req.body.time+"','"+req.body.location+"','"+req.body.groupCode+"','"+req.body.gDate+"')";
     con.query(sql, function(err){
         if(err) throw err;
         console.log("record inserted!");  
@@ -53,7 +53,7 @@ app.post('/groupCreated', function(req, res){
         from: 'lunch4four@aurora.edu', 
         to: '0772a8d93c-cc7bce@inbox.mailtrap.io',
         subject: 'Information about your Lunch4Four Monthly Meeting',
-        text: `Here is your group information: Group Code:${req.body.groupCode}, Time:${req.body.time}, Location${req.body.location},  Date:${req.body.gDate}` 
+        text: `Here is your group information: Group Code:${req.body.groupCode}, Time:${req.body.time}, Location:${req.body.location},  Date:${req.body.gDate}` 
     };
     
     transporter.sendMail(message, function(err, info){
@@ -77,7 +77,9 @@ app.post('/groupCreated', function(req, res){
 
 app.post('/memberCreated', function(req, res){
     console.log(req.body);
-    var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id, Affiliation) VALUES ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', '"+req.body.au_id+"', '"+req.body.Affiliation+"')";
+    var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id, Affiliation, acc_Activity) VALUES  \
+               ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', \
+                 '"+req.body.au_id+"', '"+req.body.Affiliation+"', '"+req.body.acc_Activity+"')";
     con.query(sql, function(err){
         if(err) throw err;
         console.log("Member updated");
@@ -95,7 +97,24 @@ var transporter = nodemailer.createTransport({
     }
   });
 
+app.post('/memberCreated', function(req, res){
+    console.log(req.body);
+    var sql = "UPDATE TABLE Member SET acc_Activity = 'Active' WHERE acc_Activity = 'Inactive'";
+    con.query(sql, function(err, result){
+        if(err) throw err;
+        console.log(result.affectedRows + " record(s) updated");
+    });
+});
 
+//Delete member if they want to be inactive..? 
+app.delete('/memberCreated', function(req, res){
+    var sql = "DELETE Member WHERE acc_Activity = 'Inactive'";
+    con.query(sql, function(err, rows){
+        if(err) throw err;
+        console.log("Deleted successfully: ", rows);
+        res.send('Deleted successfully');
+    });
+});
 //login to mailtrap.io
 // email: vanessagill94@hotmail.com
 // pw: lunch4four!
