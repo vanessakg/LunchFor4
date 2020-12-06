@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        title Admin Login
+        link( rel='stylesheet', href='css/main2.css')
+    body    
+        include ./loginHeader.pug
+        img( src='images/lunch4four_logo.png' height='90px' width='600px')
+        #container3
+            form(action='auth', method="POST")
+                h3 <b>Please enter Admin Info</b>
+                div
+                    label(for="adEmail")    Username: 
+                    input(type="text" name='username' placeholder='amdin@root' required)
+                    br
+                    br
+                    label(for="adPass")     Password: 
+                    input(type='password' name='adPass' placeholder='Password' required)
+                a(href="LFFpostLogin")
+                    input(type="submit")
+            include ./loginFooter.pug
