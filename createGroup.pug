@@ -8,14 +8,15 @@ html
         img( src='images/lunch4four_logo.png' height='45px' width='350px')
         #container3
 
-            form(action='LFFpostLogin', method='get')
+            form(action='groupCreated', method='post')
                 h3 <b>Create Group Page
                 div
                     label(for="groupCode") Group Code: 
                     input(name='groupCode' value= ' ')
                     br
                     label(for="gDate") Group Date:
-                    input(type="date", name="") 
+                    input(type="date", name="", placeholder="dd-mm-yyyy", value="2020-12-8", 
+                    min="2020-01-01" max="2020-12-31") 
                     //-input(name='auID' value= ' ')
                     br
                     label(for="time") Group Time: 
@@ -24,20 +25,11 @@ html
                     label(for="location") Group Location: 
                     input(name='location' value= ' ')
                     br
-                    label(for="AuID") Group Members Invited: 
-                    input(name='auID' value= ' ')
-                    br
-                    label(for="AuID") Group Members: 
-                    input(name='auID' value= ' ')
-                    br
-                    label(for="CheckBox") Email Confirmation:
-                    input(type='checkbox', name="CheckBox")
-                    br
 
 
             
                 a(href="LFFpostLogin")
                     button( type="login") <b>Cancel</b>
-                a(href="LFFpostLogin")
+                a(href="/groupCreated")
                     button( type="submit") <b>Submit</b>
             include ./loginFooter.pug
