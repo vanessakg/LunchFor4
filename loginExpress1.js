@@ -39,6 +39,12 @@ app.get('/LFFpostLogin', function(req, res){
 app.get('/LFFcreateMember', function(req, res){
     res.render('accountCreate')
 });
+app.get('/adminLogin', function(req, res){
+    res.render('adminLogin')
+});
+app.get('/admin', function(req, res){
+    res.render('admin')
+});
 app.use(session({
     secret: 'secret',
     resave: true,
