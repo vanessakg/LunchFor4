@@ -34,9 +34,11 @@ app.get('/LFFcreate', function(req, res){
 app.get('/LFFjoin', function(req, res){
     res.render('joinGroup')
 });
-
 app.get('/LFFpostLogin', function(req, res){
     res.render('postLogin')
+});
+app.get('/LFFcreateMember', function(req, res){
+    res.render('accountCreate')
 });
 
 con.connect(function(err) {
@@ -84,12 +86,19 @@ app.post('/groupCreated', function(req, res){
     res.send("Your information has been submitted: " + "\nTIME: " + req.body.time + "GROUP CODE: " +
     req.body.groupCode + "DATE: " + req.body.gDate); 
 
+    const message = {
+        from: 'lunch4four@aurora.edu', 
+        to: '0772a8d93c-cc7bce@inbox.mailtrap.io',
+        subject: 'Information about your Lunch4Four Monthly Meeting',
+        text: `Here is your group information: Group Code:${req.body.groupCode}, Time:${req.body.time}, Location${req.body.location},  Date:${req.body.gDate}` 
+    };
+    
     transporter.sendMail(message, function(err, info){
         if(err){
             console.log(err)
         }else {
             console.log(info)
-            var sql2 = "SELECT * FROM Member order by rand() LIMIT 2";
+            var sql2 = "SELECT * FROM Member order by rand() LIMIT 4";
             con.query(sql2, function(err, rows){
                 if(err){
                     console.log(err)
@@ -108,33 +117,31 @@ app.post('/groupCreated', function(req, res){
 //     saveUninitialized: true
 // }));
 
-// app.post('/loginLFF', function(req, res){
-//     console.log(body);
-//     var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id) VALUES ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', '"+req.body.au_id+"')";
-//     con.query(sql, function(err){
-//         if(err) throw err;
-//         console.log("Member updated");
-//     })
-// })
+app.post('/memberCreated', function(req, res){
+    console.log(req.body);
+    var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id, Affiliation) VALUES ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', '"+req.body.au_id+"', '"+req.body.Affiliation+"')";
+    con.query(sql, function(err){
+        if(err) throw err;
+        console.log("Member updated");
+    })
 
-let transporter = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io',
+    res.render('postLogin');
+});
+
+var transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-        user: '4ec3e368bdf5e0',
-        pass: 'ca40c475b2f8b0'
+      user: "65a2c5760d7b03",
+      pass: "16a9c595af29ae"
     }
-});
+  });
+
 
 //login to mailtrap.io
 // email: vanessagill94@hotmail.com
 // pw: lunch4four!
-const message = {
-    from: 'lunch4four@aurora.edu', 
-    to: '0772a8d93c-c06d1a@inbox.mailtrap.io',
-    subject: 'Information about your Lunch4Four Monthly Meeting',
-    text: 'Thanks for signing up for Lunch4Four!' // Send out groupInfo
-};
+
 //This syntax sends out email every 4th of month
 // cron.schedule('0 0 4 * *', () => {
 //     if(error){
