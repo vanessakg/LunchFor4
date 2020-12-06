@@ -73,6 +73,17 @@ input{
     border:3px solid #0d023d;
     border-radius:3px 3px 3px 3px;
   }
+  input[type="submit"]{
+    font-size: 13px;
+    width: 200px;
+    height: 40px;
+    background-color:rgb(27, 3, 92) ;
+    color:white;
+    border-radius:3px 3px 3px 3px;
+    border: none;
+    margin-top: 50px;
+    cursor: pointer;
+  }
 
 button{
     font-size: 13px;
