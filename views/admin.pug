@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title Admin
+        link( rel='stylesheet', href='css/main2.css')
+        include ./loginHeader.pug
+    body
+        #container1
+            h3#join View Groups
+            form(action='post-test', method='post')
+                div
+                    label(for="groupCode") <b>Click "Groups" to display current groups </b>
+                br
+                button(type="button" class="join") Groups
+
+        #container2
+            h3#create View History
+            form(action='post-test', method='post')
+                div
+                    label(for="createCode") <b>Click "History" to display past groups</b>
+                br
+                button(type="button" class="create") History
