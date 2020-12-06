@@ -4,19 +4,20 @@ html
         title Admin
         link( rel='stylesheet', href='css/main2.css')
         include ./loginHeader.pug
+        h3 Welcome Admin User
     body
         #container1
-            h3#join View Groups
+            h3#join View Active Users
             form(action='post-test', method='post')
                 div
-                    label(for="groupCode") <b>Click "Groups" to display current groups </b>
+                    label(for="groupCode") <b>Click "Users" to display active users </b>
                 br
-                button(type="button" class="join") Groups
-
+                button(type="button" class="join") Users
         #container2
-            h3#create View History
-            form(action='post-test', method='post')
+            h3#create Create Group
+            form(action='post-test', method='get')
                 div
-                    label(for="createCode") <b>Click "History" to display past groups</b>
+                    label(for="createCode") <b>Click "Create" to create new group</b>
                 br
-                button(type="button" class="create") History
+                a(href="LFFcreate")
+                    button(type="button" class="create") Create
