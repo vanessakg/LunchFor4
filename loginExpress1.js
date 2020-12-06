@@ -50,7 +50,6 @@ app.get('/adminLogin', function(req, res){
 app.get('/admin', function(req, res){
     res.render('admin')
 });
-
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/adminLogin'));
 });
@@ -174,4 +173,4 @@ app.delete('/memberCreated', function(req, res){
 //app.post('/joinGroup', function(req, res){    
 //});
 module.exports = con;
-app.listen(3333); 
+app.listen(3333);   
