@@ -92,7 +92,7 @@ app.post('/groupCreated', function(req, res){
     transporter.sendMail(message, function(err, info){
         if(err){
             console.log(err)
-        }else {
+        } else {
             console.log(info)
             var sql2 = "SELECT * FROM Member order by rand() LIMIT 2";
             con.query(sql2, function(err, rows){
