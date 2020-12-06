@@ -34,17 +34,20 @@ app.get('/LFFcreate', function(req, res){
 app.get('/LFFjoin', function(req, res){
     res.render('joinGroup')
 });
+
 app.get('/LFFpostLogin', function(req, res){
     res.render('postLogin')
-});
-app.get('/LFFcreateMember', function(req, res){
-    res.render('accountCreate')
 });
 
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 });
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/adminLogin'));
 });
@@ -52,14 +55,14 @@ app.post('/auth', function(request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
 	if (username && password) {
-		connection.query('SELECT * FROM Admin WHERE username = "admin" AND password = "root"', [username, password], function(error, results, fields) {
+		con.query('SELECT * FROM Admin WHERE username = "admin" AND password = "root"', [username, password], function(error, results, fields) {
 			if (results.length > 0) {
 				request.session.loggedin = true;
 				request.session.username = username;
 				response.redirect('/admin');
 			} else {
 				response.send('Incorrect Username and/or Password!');
-			}			
+			}
 			response.end();
 		});
 	} else {
@@ -81,24 +84,17 @@ app.post('/groupCreated', function(req, res){
     var sql = "INSERT INTO GroupInfo(time, location, groupCode, date) VALUES ('"+req.body.time+"','"+req.body.location+"','"+req.body.groupCode+"','"+req.body.gDate+"')";
     con.query(sql, function(err){
         if(err) throw err;
-        console.log("record inserted!");  
+        console.log("record inserted!"); 
     });
     res.send("Your information has been submitted: " + "\nTIME: " + req.body.time + "GROUP CODE: " +
     req.body.groupCode + "DATE: " + req.body.gDate); 
 
-    const message = {
-        from: 'lunch4four@aurora.edu', 
-        to: '0772a8d93c-cc7bce@inbox.mailtrap.io',
-        subject: 'Information about your Lunch4Four Monthly Meeting',
-        text: `Here is your group information: Group Code:${req.body.groupCode}, Time:${req.body.time}, Location${req.body.location},  Date:${req.body.gDate}` 
-    };
-    
     transporter.sendMail(message, function(err, info){
         if(err){
             console.log(err)
         }else {
             console.log(info)
-            var sql2 = "SELECT * FROM Member order by rand() LIMIT 4";
+            var sql2 = "SELECT * FROM Member order by rand() LIMIT 2";
             con.query(sql2, function(err, rows){
                 if(err){
                     console.log(err)
@@ -111,37 +107,34 @@ app.post('/groupCreated', function(req, res){
         }
     });
 });
-// app.use(session({
-//     secret: 'secret',
-//     resave: true,
-//     saveUninitialized: true
-// }));
 
-app.post('/memberCreated', function(req, res){
-    console.log(req.body);
-    var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id, Affiliation) VALUES ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', '"+req.body.au_id+"', '"+req.body.Affiliation+"')";
-    con.query(sql, function(err){
-        if(err) throw err;
-        console.log("Member updated");
-    })
+// app.post('/loginLFF', function(req, res){
+//     console.log(body);
+//     var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id) VALUES ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', '"+req.body.au_id+"')";
+//     con.query(sql, function(err){
+//         if(err) throw err;
+//         console.log("Member updated");
+//     })
+// })
 
-    res.render('postLogin');
-});
-
-var transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
+let transporter = nodemailer.createTransport({
+    host: 'smtp.mailtrap.io',
     port: 2525,
     auth: {
-      user: "65a2c5760d7b03",
-      pass: "16a9c595af29ae"
+        user: '4ec3e368bdf5e0',
+        pass: 'ca40c475b2f8b0'
     }
-  });
-
+});
 
 //login to mailtrap.io
 // email: vanessagill94@hotmail.com
 // pw: lunch4four!
-
+const message = {
+    from: 'lunch4four@aurora.edu', 
+    to: '0772a8d93c-c06d1a@inbox.mailtrap.io',
+    subject: 'Information about your Lunch4Four Monthly Meeting',
+    text: 'Thanks for signing up for Lunch4Four!' // Send out groupInfo
+};
 //This syntax sends out email every 4th of month
 // cron.schedule('0 0 4 * *', () => {
 //     if(error){
