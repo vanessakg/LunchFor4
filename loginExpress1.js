@@ -53,6 +53,13 @@ app.get('/admin', function(req, res){
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/adminLogin'));
 });
+app.get('/post-test1', function (req, res) { 
+    con.query('SELECT * FROM Member WHERE acc_Activity = "Active"', function(err, rows) {  
+        con.end();
+        if (err) throw err;  
+        res.json(rows); 
+    });
+});
 app.post('/auth', function(request, response) {
 	var username = request.body.username;
 	var password = request.body.password;
