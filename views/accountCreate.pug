@@ -7,23 +7,23 @@ html
         include ./loginHeader.pug
         img( src='images/lunch4four_logo.png' height='45px' width='350px')
         #container3
-            form(action='memberCreated', method='post')
+            form(action='LFFstart', method='get')
                 h3 <b>Create Account Page
                 div
-                    label(for="fName") First Name:  
+                    label(for="AuID") First Name:  
                     input(name='fName' value= ' ')
                     br
                     br
-                    label(for="lName") Last Name: 
+                    label(for="AuID") Last Name: 
                     input(name='lName' value= ' ')
                     br
                     br
-                    label(for="email") AU Email:  
-                    input(name='email' value= ' ')
+                    label(for="AuID") AU Email:  
+                    input(name='auID' value= ' ')
                     br
                     br
-                    label(for="au_id") AU ID Number:  
-                    input(name='au_id' value= ' ')
+                    label(for="AuID") AU ID Number:  
+                    input(name='auID' value= ' ')
                     br
                     br
                     label(for="phoneNum") Phone Number:  

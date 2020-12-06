@@ -7,12 +7,12 @@ html
         include ./loginHeader.pug
         img( src='images/lunch4four_logo.png' height='90px' width='600px')
         #container3
-            form(action='LFFcreateMember', method='get')
-                h3 <b>Please enter your Aurora ID number
+            form(action='LFFaccount', method='get')
+                h3 <b>Please enter your Aurora ID number</b>
                 div
                     label(for="AuID") Create an Account: 
-                    a(href="LFFcreateMember") 
-                        button( type="login") Create
+                    a(href="LFFaccount") 
+                        button( type="login") <b>Create</b>
                     br
                     br
         
@@ -23,5 +23,8 @@ html
                     br
             
                 a(href="LFFpostLogin")
-                    button( type="login") Authenticate</b>
+                    button( type="login") <b>Authenticate</b>
+            form(action='adminLogin', method="get")
+                a(href="adminLogin")
+                    button( type="adLogin") <b>Admin User</b>
             include ./loginFooter.pug

@@ -1,8 +1,10 @@
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var mysql = require("mysql");
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
+var path = require('path');
 //For scheduling emails every 4th of the Month
 //var cron = require('node-cron');
 
@@ -36,6 +38,41 @@ app.get('/LFFpostLogin', function(req, res){
 });
 app.get('/LFFcreateMember', function(req, res){
     res.render('accountCreate')
+});
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+app.get('/', function(request, response) {
+	response.sendFile(path.join(__dirname + '/adminLogin'));
+});
+app.post('/auth', function(request, response) {
+	var username = request.body.username;
+	var password = request.body.password;
+	if (username && password) {
+		con.query('SELECT * FROM Admin WHERE username = "admin" AND password = "root"', [username, password], function(error, results, fields) {
+			if (results.length > 0) {
+				request.session.loggedin = true;
+				request.session.username = username;
+				response.redirect('/admin');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+        response.end();
+    }
+});
+app.get('/admin', function(request, response) {
+    if (request.session.loggedin) {
+        response.send('Welcome Admin user!');
+    } else {
+        response.send('Please login to view this page!');
+    }
+    response.end();
 });
 app.post('/groupCreated', function(req, res){
     console.log(req.body);
@@ -79,7 +116,7 @@ app.post('/memberCreated', function(req, res){
     console.log(req.body);
     var sql = "INSERT INTO Member(fName, lName, email, phoneNum, au_id, Affiliation, acc_Activity) VALUES  \
                ('"+req.body.fName+"', '"+req.body.lName+"', '"+req.body.email+"', '"+req.body.phoneNum+"', \
-                 '"+req.body.au_id+"', '"+req.body.Affiliation+"', '"+req.body.acc_Activity+"')";
+                '"+req.body.au_id+"', '"+req.body.Affiliation+"', '"+req.body.acc_Activity+"')";
     con.query(sql, function(err){
         if(err) throw err;
         console.log("Member updated");
