@@ -104,7 +104,7 @@ button.create{
     color:white;
     border-radius:3px 3px 3px 3px;
     border: none;
-    margin-top: 50px;
+    margin-top: 25px;
     cursor: pointer;
 }
 button.join{
