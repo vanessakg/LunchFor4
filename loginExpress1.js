@@ -18,7 +18,11 @@ var con = mysql.createConnection({
 app.set('view engine', 'pug' );
 app.use( express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 app.get('/LFFstart', function(req, res){
     res.render('loginTest1')
 });
@@ -34,20 +38,16 @@ app.get('/LFFcreate', function(req, res){
 app.get('/LFFjoin', function(req, res){
     res.render('joinGroup')
 });
-
 app.get('/LFFpostLogin', function(req, res){
     res.render('postLogin')
 });
-
+app.get('/LFFcreateMember', function(req, res){
+    res.render('accountCreate')
+});
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
 });
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/adminLogin'));
 });
