@@ -7,17 +7,17 @@ html
     body
         #container1
             h3#join Join Group 
-            form(action='post-test', method='post')
                 div
                     label(for="groupCode") <b>Enter 4 Digit Group Code: </b>
                     input(type="number" for="groupCode")
                 br
-                button(type="submit" class="join") Join
+                a(href="joinGroup")
+                    button(type="button" class="join") Join
 
         #container2
             h3#create Create Group
-            form(action='post-test', method='post')
                 div
-                    label(for="createCode") <b>Click "Create" below to create new Group!</b>
+                    label(for="createCode") <b>Click "Create" below to create new Group!!</b>
                 br
-                button(type="submit" class="create") Create
+                a(href="LFFcreate")
+                    button(type="button" class="create") Create
