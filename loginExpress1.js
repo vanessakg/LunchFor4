@@ -55,7 +55,6 @@ app.get('/', function(request, response) {
 });
 app.get('/post-test1', function (req, res) { 
     con.query('SELECT * FROM Member WHERE acc_Activity = "Active"', function(err, rows) {  
-        con.end();
         if (err) throw err;  
         res.json(rows); 
     });
