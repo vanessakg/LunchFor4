@@ -53,11 +53,19 @@ app.get('/admin', function(req, res){
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/adminLogin'));
 });
-app.get('/post-test1', function (req, res) { 
+app.get('/activeMembers', function (req, res) { 
     con.query('SELECT * FROM Member WHERE acc_Activity = "Active"', function(err, rows) {  
         if (err) throw err;  
         res.json(rows); 
     });
+});
+app.get('/admin', function(request, response) {
+    if (request.session.loggedin) {
+        response.send('Welcome Admin user!');
+    } else {
+        response.send('Please login to view this page!');
+    }
+    response.end();
 });
 app.post('/auth', function(request, response) {
 	var username = request.body.username;
@@ -78,14 +86,7 @@ app.post('/auth', function(request, response) {
         response.end();
     }
 });
-app.get('/admin', function(request, response) {
-    if (request.session.loggedin) {
-        response.send('Welcome Admin user!');
-    } else {
-        response.send('Please login to view this page!');
-    }
-    response.end();
-});
+
 app.post('/groupCreated', function(req, res){
     console.log(req.body);
 
@@ -141,29 +142,31 @@ var transporter = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: {
-      user: "65a2c5760d7b03",
-      pass: "16a9c595af29ae"
+      user: "a4321d73c239a3",
+      pass: "eb8aa9af98c165"
     }
   });
 
-app.post('/memberCreated', function(req, res){
-    console.log(req.body);
-    var sql = "UPDATE TABLE Member SET acc_Activity = 'Active' WHERE acc_Activity = 'Inactive'";
-    con.query(sql, function(err, result){
-        if(err) throw err;
-        console.log(result.affectedRows + " record(s) updated");
-    });
-});
+module.exports = con;
+app.listen(3333);
+// app.put('/memberCreated', function(req, res){
+//     console.log(req.body);
+//     var sql = "UPDATE TABLE Member SET acc_Activity = 'Active' WHERE acc_Activity = 'Inactive'";
+//     con.query(sql, function(err, result){
+//         if(err) throw err;
+//         console.log(result.affectedRows + " record(s) updated");
+//     });
+// });
 
-//Delete member if they want to be inactive..? 
-app.delete('/memberCreated', function(req, res){
-    var sql = "DELETE Member WHERE acc_Activity = 'Inactive'";
-    con.query(sql, function(err, rows){
-        if(err) throw err;
-        console.log("Deleted successfully: ", rows);
-        res.send('Deleted successfully');
-    });
-});
+// //Delete member if they want to be inactive..? 
+// app.delete('/memberCreated', function(req, res){
+//     var sql = "DELETE Member WHERE acc_Activity = 'Inactive'";
+//     con.query(sql, function(err, rows){
+//         if(err) throw err;
+//         console.log("Deleted successfully: ", rows);
+//         res.send('Deleted successfully');
+//     });
+// });
 //login to mailtrap.io
 // email: vanessagill94@hotmail.com
 // pw: lunch4four!
@@ -175,8 +178,4 @@ app.delete('/memberCreated', function(req, res){
 //     } else{
 //         console.log('Email sent: ' + info.response);
 //     }
-// });
-//app.post('/joinGroup', function(req, res){    
-//});
-module.exports = con;
-app.listen(3333);   
+// });  
